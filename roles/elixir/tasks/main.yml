@@ -1,0 +1,33 @@
+---
+- name: Add Erlang repo
+  apt_repository: repo='deb http://packages.erlang-solutions.com/debian squeeze contrib' state=present
+
+- name: Add Erlang repo key
+  apt_key: url=http://packages.erlang-solutions.com/debian/erlang_solutions.asc
+
+- name: Update apt cache
+  apt: update_cache=yes
+ 
+- name: Install build-essential
+  apt: pkg=build-essential
+ 
+- name: Install Erlang
+  apt: pkg=erlang
+
+- name: Install Erlang doc
+  apt: pkg=erlang-doc
+ 
+- name: Get Elixir
+  git: repo=https://github.com/elixir-lang/elixir.git dest=/opt/elixir
+ 
+- name: Build Elixir
+  command: chdir=/opt/elixir make install
+ 
+- name: Get Dynamo
+  git: repo=https://github.com/dynamo/dynamo.git dest=/opt/dynamo
+ 
+- name: Get Dynamo dependencies
+  command: chdir=/opt/dynamo mix deps.get
+  
+- name: Build Dynamo
+  command: chdir=/opt/dynamo mix do local.rebar, compile
