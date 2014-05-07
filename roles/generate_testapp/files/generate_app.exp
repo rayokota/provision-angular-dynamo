@@ -53,4 +53,7 @@ expect "*username*"
 send -- "postgres\r"
 expect "*password*"
 send -- "postgres\r"
+# bower asking for feedback
+expect "*bower*"
+send -- "\r"
 expect eof
