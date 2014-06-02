@@ -19,6 +19,10 @@
   command: chdir=/tmp/testapp /tmp/generate_entity.exp
   sudo: false
 
+- name: Install Hex package manager
+  command: chdir=/tmp/testapp mix local.hex --force
+  sudo: false
+
 - name: Build application
   command: chdir=/tmp/testapp mix do deps.get, local.rebar, compile, ecto.migrate Repo
   sudo: false
